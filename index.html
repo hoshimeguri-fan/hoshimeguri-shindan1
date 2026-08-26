@@ -3,68 +3,823 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>推し診断結果：百目鬼える【星めぐり学園】</title>
-  
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="【推し診断】あなたにぴったりなのは「百目鬼える」！">
-  <meta name="twitter:description" content="👁️‍🗨️ たわわなお姉さん× 歌うま！星めぐり学園 推しライバー診断の結果はこちら！">
-  <meta name="twitter:image" content="https://hoshimeguri.live/wp-content/uploads/2025/12/eru_3.webp">
-  
-  <meta property="og:type" content="article">
-  <meta property="og:title" content="【推し診断】あなたにぴったりなのは「百目鬼える」！">
-  <meta property="og:description" content="👁️‍🗨️ たわわなお姉さん× 歌うま！星めぐり学園 推しライバー診断の結果はこちら！">
-  <meta property="og:url" content="https://hoshimeguri-fan.github.io/hoshimeguri-shindan1/eru.html">
-  <meta property="og:image" content="https://hoshimeguri.live/wp-content/uploads/2025/12/eru_3.webp">
-
+  <title>星めぐり学園 推しライバー診断</title>
   <style>
+    :root {
+      --bg-dark: #0f1123;
+      --card-bg: #1a1d36;
+      --accent: #7986cb;
+      --accent-hover: #9fa8da;
+      --star-color: #ffd54f;
+      --text-main: #e0e0e0;
+      --text-sub: #9e9e9e;
+      --official-color: #4fc3f7;
+    }
+
     body {
-      background-color: #0f1123;
-      color: #e0e0e0;
-      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", sans-serif;
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 20% 20%, rgba(121, 134, 203, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(255, 213, 79, 0.1) 0%, transparent 40%);
+      color: var(--text-main);
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 80vh;
-      text-align: center;
-      margin: 0;
-      padding: 20px;
+      min-height: 90vh;
     }
-    .box {
-      background: #1a1d36;
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 30px;
+
+    .container {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 16px;
-      max-width: 400px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 640px;
+      padding: 30px;
+      box-sizing: border-box;
+      text-align: center;
     }
-    img {
-      max-width: 200px;
-      height: auto;
+
+    .logo-container {
       margin-bottom: 16px;
     }
-    a {
-      display: inline-block;
-      background: #7986cb;
-      color: #fff;
-      text-decoration: none;
-      padding: 12px 24px;
-      border-radius: 8px;
+
+    .site-logo {
+      max-width: 220px;
+      height: auto;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+      color: var(--star-color);
+    }
+
+    p.subtitle {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      margin-bottom: 24px;
+    }
+
+    .progress-bar-container {
+      background: rgba(255, 255, 255, 0.1);
+      height: 8px;
+      border-radius: 4px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background: linear-gradient(90deg, var(--accent), var(--star-color));
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .q-number {
+      font-size: 0.85rem;
+      color: var(--accent);
       font-weight: bold;
-      margin-top: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .question-text {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 12px 0 24px 0;
+      line-height: 1.5;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-main);
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .option-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .back-btn-wrapper {
+      margin-top: 18px;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .back-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-sub);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      transition: 0.2s;
+    }
+
+    .back-btn:hover {
+      color: var(--text-main);
+      border-color: var(--accent);
+      background: rgba(121, 134, 203, 0.1);
+    }
+
+    /* Result Section */
+    .result-container {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-badge {
+      display: inline-block;
+      background: rgba(255, 213, 79, 0.15);
+      color: var(--star-color);
+      border: 1px solid var(--star-color);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+    }
+
+    .result-name {
+      font-size: 2.1rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .counter-badge {
+      display: inline-block;
+      background: rgba(121, 134, 203, 0.2);
+      border: 1px solid var(--accent);
+      color: #e0e0e0;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+      font-weight: 500;
+    }
+
+    .counter-num {
+      color: var(--star-color);
+      font-weight: bold;
+      font-size: 1.05rem;
+    }
+
+    .image-wrapper {
+      width: 100%;
+      max-width: 400px;
+      height: 460px;
+      margin: 0 auto 24px auto;
+      border-radius: 16px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .liver-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+    }
+
+    .result-desc {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #cfd8dc;
+      text-align: left;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 18px;
+      border-radius: 10px;
+      margin-bottom: 24px;
+      white-space: pre-line;
+    }
+
+    .action-btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .post-action-button {
+      background: #ffffff !important;
+      color: #000000 !important;
+      border: none !important;
+      padding: 15px !important;
+      border-radius: 10px !important;
+      text-decoration: none !important;
+      font-weight: bold !important;
+      font-size: 1rem !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 10px !important;
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15) !important;
+      transition: 0.2s ease !important;
+      cursor: pointer !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+
+    .post-action-button:hover {
+      background: #e6e6e6 !important;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(255, 255, 255, 0.25) !important;
+    }
+
+    .official-profile-link {
+      background: rgba(79, 195, 247, 0.12);
+      color: var(--official-color);
+      border: 1px solid var(--official-color);
+      padding: 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: 0.2s;
+    }
+
+    .official-profile-link:hover {
+      background: var(--official-color);
+      color: #0f1123;
+    }
+
+    .retry-btn {
+      background: transparent;
+      border: 1px solid var(--text-sub);
+      color: var(--text-sub);
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.2s;
+    }
+
+    .retry-btn:hover {
+      color: var(--text-main);
+      border-color: var(--text-main);
+    }
+
+    /* フッタークレジットスタイル */
+    .creator-contact {
+      margin-top: 24px;
+      padding-top: 14px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.12);
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      line-height: 1.5;
+    }
+
+    .creator-contact a {
+      color: #9fa8da;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .creator-contact a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px 16px;
+      }
+      .site-logo {
+        max-width: 180px;
+      }
+      .image-wrapper {
+        max-width: 100%;
+        height: 380px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="box">
-    <img src="https://hoshimeguri.live/wp-content/uploads/2025/12/eru_3.webp" alt="百目鬼える">
-    <h2>百目鬼える</h2>
-    <p>診断トップページへ移動します...</p>
-    <a href="./">診断を遊ぶ・もう一度診断する</a>
+
+<div class="container">
+  <div id="quiz-box">
+    <div class="logo-container">
+      <img src="https://hoshimeguri.live/wp-content/uploads/2026/02/hoshimeguri.webp" alt="星めぐり学園" class="site-logo">
+    </div>
+
+    <h1>星めぐり学園 推し診断</h1>
+    <p class="subtitle">全20問の質問に答えて、あなたにぴったりのライバーを見つけよう</p>
+    
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progress"></div>
+    </div>
+
+    <div class="q-number" id="q-number">QUESTION 01</div>
+    <div class="question-text" id="q-text">質問テキスト</div>
+
+    <div class="options" id="options-container"></div>
+
+    <div class="back-btn-wrapper">
+      <button class="back-btn" id="back-btn" onclick="prevQuestion()">
+        <span>← 前の質問に戻る</span>
+      </button>
+    </div>
   </div>
 
-  <script>
-    setTimeout(function() {
-      location.replace('./');
-    }, 2000);
-  </script>
+  <div id="result-box" class="result-container">
+    <div class="result-badge">あなたにぴったりのライバーは…</div>
+    <div class="result-name" id="liver-name">ライバー名</div>
+
+    <div class="counter-badge" id="counter-display">
+      ✨ あなたは <span class="counter-num" id="liver-count">...</span> 人目の <span id="counter-liver-name"></span> の推しです！
+    </div>
+
+    <div class="image-wrapper" id="image-container">
+      <img src="" alt="ライバー画像" id="liver-img" class="liver-img">
+    </div>
+
+    <div class="result-desc" id="liver-desc">紹介文</div>
+
+    <div class="action-btn-group">
+      <a href="#" id="result-post-link" target="_blank" rel="noopener noreferrer" class="post-action-button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        <span>結果をポストする</span>
+      </a>
+      <a href="#" id="official-btn" target="_blank" rel="noopener noreferrer" class="official-profile-link">
+        <span>🌐 公式プロフィールを見る</span>
+      </a>
+      <button class="retry-btn" onclick="restartQuiz()">もう一度診断する</button>
+    </div>
+
+    <!-- お問い合わせ・作者リンク -->
+    <div class="creator-contact">
+      ご意見・お問い合わせ・不具合等は <a href="https://x.com/yatatatatan" target="_blank" rel="noopener noreferrer">𝕏 (@yatatatatan)</a> まで
+    </div>
+  </div>
+</div>
+
+<script>
+const LIVERS = {
+  "神乃ひかり": {
+    key: "kamino_hikari",
+    file: "hikari.html",
+    desc: "✨ 神様系ハイテンション！\n明るく甘い元気な声と、リスナーとの楽しいプロレス・愛されポンコツな一面が魅力。夜〜深夜に笑顔と元気をもらいたいあなたにぴったりです。",
+    url: "https://hoshimeguri.live/vtuber/kamino-hikari/",
+    img: "https://hoshimeguri.live/wp-content/uploads/2025/12/hikari02_1.webp",
+    score: 0
+  },
+  "餅々さくら": {
+    key: "mochimochi_sakura",
+    file: "sakura.html",
+    desc: "🌸 癒やし系カワボ × 歌唱力！\nほんわかおっとりした安心感と、時折見せるピリッとした毒舌のギャップが癖になる。圧倒的な歌唱力は必聴です。",
+    url: "https://hoshimeguri.live/vtuber/mochimochi-sakura/",
+    img: "https://hoshimeguri.live/wp-content/uploads/2025/12/mochimochi_4-1.webp",
+    score: 0
+  },
+  "伊織ねめあ": {
+    key: "iori_nemea",
+    file: "nemea.html",
+    desc: "🦄 芯のある美声 × オタク気質！\n圧倒的な表現力と美しい声での歌・ゲーム配信。ディズニー好きなど親しみやすいオタク気質もあり、じっくり配信を楽しみたいあなたに。",
+    url: "https://hoshimeguri.live/vtuber/iori-nemea/",
+    img: "https://hoshimeguri.live/wp-content/uploads/2025/12/iori_4.webp",
+    score: 0
+  },
+  "氷室うつろ": {
+    key: "himuro_utsuro",
+    file: "utsuro.html",
+    desc: "❄️ 凄腕ゲーマーメイド × 距離感ゼロ！\n毎日夜に会える安心感。軽快なトーク力と心地よいコメ読み、高いゲームの腕前で毎日の疲れをじんわり溶かしてくれます。",
+    url: "https://hoshimeguri.live/vtuber/himuro-utsuro/",
+    img: "https://hoshimeguri.live/wp-content/uploads/2025/12/utsuro_3.webp",
+    score: 0
+  },
+  "百目鬼える": {
+    key: "domeki_eru",
+    file: "eru.html",
+    desc: "👁️‍🗨️ ハスキーイケボ × 友達感覚！\n少年感のある歌うまハスキーボイス。一緒に乾杯しながらワイワイ過ごせる距離感の近さと、抜群の歌唱力・ゲームへの熱量が魅力です。",
+    url: "https://hoshimeguri.live/vtuber/domeki-eru/",
+    img: "https://hoshimeguri.live/wp-content/uploads/2025/12/eru_3.webp",
+    score: 0
+  },
+  "満咲ミリネ": {
+    key: "michisaki_mirine",
+    file: "mirine.html",
+    desc: "🌟 明るいムードメーカー × ぶっ飛び企画！\nクリアな明るい声と親しみやすさ抜群のトーク。思わず笑顔になっちゃう予想外の企画力で、楽しい夜を過ごしたいあなたに。",
+    url: "https://hoshimeguri.live/vtuber/michisaki-mirine/",
+    img: "https://hoshimeguri.live/wp-content/uploads/2025/12/mirine_1.webp",
+    score: 0
+  },
+  "勝気シャクナ": {
+    key: "kachiki_shakuna",
+    file: "shakuna.html",
+    desc: "🥀 落ち着きツッコミ × 頼れるお兄さん！\nサバサバした軽快なトークと常識人枠の安心感。料理も歌もこなす頼れる存在で、心地よいASMRやゲーム実況を届けてくれます。",
+    url: "https://hoshimeguri.live/vtuber/kachiki-shakuna/",
+    img: "https://hoshimeguri.live/wp-content/uploads/2025/12/shakuna_4.webp",
+    score: 0
+  },
+  "馬鹿蝶": {
+    key: "umashika_tefu",
+    file: "tefu.html",
+    desc: "🦋 低音落ち着き × 独特な世界観！\n思わず守りたくなる不思議な雰囲気と、確かなゲームの腕前。夜にまったりと独特のペースに浸りたいあなたに最適です。",
+    url: "https://hoshimeguri.live/vtuber/umashika-tefu/",
+    img: "https://hoshimeguri.live/wp-content/uploads/2025/12/tefu_1.webp",
+    score: 0
+  },
+  "切熊ゆに": {
+    key: "kirikuma_yuni",
+    file: "yuni.html",
+    desc: "🧸 甘々妹系カワボ × 深夜ASMR！\n毎日深夜に癒やしてくれるあざと可愛い妹枠。甘えられたい人、深夜に甘い歌声やASMRでとろけたい人にぴったりです。",
+    url: "https://hoshimeguri.live/vtuber/kirikuma-yuni/",
+    img: "https://hoshimeguri.live/wp-content/uploads/2025/12/yuni_2.webp",
+    score: 0
+  },
+  "碧衣ヘル": {
+    key: "aoi_heru",
+    file: "heru.html",
+    desc: "🌌 クール透明感 × アーティスティック！\n唯一無二の世界観を持つマイペースな表現者。落ち着いたトーンとお酒・企画配信で、特別な夜を過ごしたいあなたへ。",
+    url: "https://hoshimeguri.live/vtuber/aoi-heru/",
+    img: "https://hoshimeguri.live/wp-content/uploads/2025/12/heru_6.webp",
+    score: 0
+  },
+  "帝": {
+    key: "mikado_vsinger",
+    file: "mikado.html",
+    desc: "👑 圧倒的Vsinger × 孤高の歌姫！（ツチノコ）\n配信やSNSにも現れないど、ただひたすらに魂を揺さぶる至高の歌唱力を浴びたいあなたに最もふさわしい存在です。",
+    url: "https://hoshimeguri.live/vtuber/mikado/",
+    img: "https://hoshimeguri.live/wp-content/uploads/2025/12/mikado_1.webp",
+    score: 0
+  },
+  "幽麗シャノ": {
+    key: "yurei_shano",
+    file: "shano.html",
+    desc: "👻 浮遊感カワボ × 期待の幽霊枠！\n夜に活発に現れる、お絵描き幽霊猫。高いイラスト技術に加えてゲーム・歌をマルチにこなす不思議で可愛らしい存在。SNSでも距離近く楽しみたいあなたに。",
+    url: "https://hoshimeguri.live/vtuber/yurei-shano/",
+    img: "https://hoshimeguri.live/wp-content/uploads/2026/07/shano.webp",
+    score: 0
+  },
+  "魔昏るい": {
+    key: "makura_rui",
+    file: "rui.html",
+    desc: "🎮 男声・女声の二刀流 × 平成レトロ＆長時間！\n変幻自在の声質と楽器演奏・抜群の歌うま力。2〜10時間の長時間配信で、友達感覚で朝までガッツリ付き合いたいあなたへ。",
+    url: "https://hoshimeguri.live/vtuber/makura-rui/",
+    img: "https://hoshimeguri.live/wp-content/uploads/2025/12/rui_1.webp",
+    score: 0
+  }
+};
+
+const questions = [
+  {
+    q: "配信を見に行く時間帯として一番落ち着くのは？",
+    opts: [
+      { text: "夕方〜夜の早い時間（18:00〜21:00頃）", scores: { "餅々さくら": 5 } },
+      { text: "一般的な夜の時間（21:00〜24:00頃）", scores: { "神乃ひかり": 4, "伊織ねめあ": 3, "満咲ミリネ": 3 } },
+      { text: "深夜〜深夜過ぎ（24:00〜26:00以降）", scores: { "切熊ゆに": 5 } },
+      { text: "不定期でも告知があった時にじっくり", scores: { "碧衣ヘル": 3, "帝": 2 } }
+    ]
+  },
+  {
+    q: "配信者に一番求めている要素は？",
+    opts: [
+      { text: "ひたすら心に響く圧倒的な歌声・表現力", scores: { "伊織ねめあ": 3, "帝": 4 } },
+      { text: "毎日の日課として寄り添ってくれるコメ読み・距離の近さ", scores: { "氷室うつろ": 4 } },
+      { text: "友達感覚で笑い合える軽快なノリ・企画", scores: { "満咲ミリネ": 5 } },
+      { text: "独特の世界観と落ち着いた癒やし", scores: { "馬鹿蝶": 4, "碧衣ヘル": 3 } }
+    ]
+  },
+  {
+    q: "好みの声のトーン・声質は？",
+    opts: [
+      { text: "愛嬌ある高音・元気なカワボ", scores: { "神乃ひかり": 5 } },
+      { text: "クールで透明感のある神秘的な声", scores: { "碧衣ヘル": 5 } },
+      { text: "芯のある美しい高音・表現力豊かな美声", scores: { "伊織ねめあ": 5 } },
+      { text: "男声と女声を自在に操る両声類", scores: { "魔昏るい": 5 } }
+    ]
+  },
+  {
+    q: "コラボ配信とソロ配信、どっちが好き？",
+    opts: [
+      { text: "他のライバーとワイワイ盛り上がるコラボ配信が大好き！", scores: { "餅々さくら": 3, "伊織ねめあ": 3, "百目鬼える": 3, "魔昏るい": 2 } },
+      { text: "推しと1対1で向き合えるソロ配信中心が好き", scores: { "切熊ゆに": 4, "氷室うつろ": 2 } }
+    ]
+  },
+  {
+    q: "配信の長さ（枠の長さ）の理想は？",
+    opts: [
+      { text: "2時間前後でちょうどよくまとまっている", scores: { "勝気シャクナ": 5, "餅々さくら": 3 } },
+      { text: "3〜4時間くらい、夜じっくり付き合いたい", scores: { "氷室うつろ": 3, "馬鹿蝶": 3 } },
+      { text: "4時間以上の耐久や長時間配信もウェルカム！", scores: { "魔昏るい": 5 } }
+    ]
+  },
+  {
+    q: "ライバーの性別や雰囲気の好みは？",
+    opts: [
+      { text: "甘えん坊で守りたくなる可愛い女の子", scores: { "切熊ゆに": 5 } },
+      { text: "低音で落ち着きがあり、どこか放っておけない女性", scores: { "馬鹿蝶": 5 } },
+      { text: "頼りがいがあってトークも軽快な男性", scores: { "勝気シャクナ": 5 } },
+      { text: "甘やかし上手で包容力のあるみんなのお姉さん", scores: { "百目鬼える": 5 } }
+    ]
+  },
+  {
+    q: "お酒（晩酌・飲酒配信）を見ながら一緒に飲むのは好き？",
+    opts: [
+      { text: "ほんわか癒やされながら乾杯したい", scores: { "餅々さくら": 5 } },
+      { text: "気取らない友達感覚でワイワイ飲みたい", scores: { "百目鬼える": 5 } },
+      { text: "ディープでクールな夜の晩酌を楽しみたい", scores: { "碧衣ヘル": 4 } },
+      { text: "お酒よりはゲームや企画に集中して楽しみたい", scores: { "満咲ミリネ": 4, "幽麗シャノ": 4 } }
+    ]
+  },
+  {
+    q: "ライバーとのコミュニケーション・距離感の理想は？",
+    opts: [
+      { text: "リスナーと会話するようにたくさんコメントを拾ってほしい", scores: { "氷室うつろ": 5 } },
+      { text: "ポンコツなところを突っ込んだり、楽しくプロレスしたい", scores: { "神乃ひかり": 5 } },
+      { text: "あざとく甘えてほしい・妹のように愛でたい", scores: { "切熊ゆに": 5 } },
+      { text: "配信頻度やコメントにとらわれず、作品そのものを浴びたい", scores: { "帝": 5, "伊織ねめあ": 2 } }
+    ]
+  },
+  {
+    q: "配信の頻度について希望は？",
+    opts: [
+      { text: "毎日欠かさず配信があってほしい（夜のルーティン）", scores: { "氷室うつろ": 4, "切熊ゆに": 3 } },
+      { text: "週に数回、安定して楽しめれば十分", scores: { "幽麗シャノ": 4, "百目鬼える": 3 } },
+      { text: "不定期でも1回の配信を大切に噛み締めたい", scores: { "碧衣ヘル": 5, "帝": 2 } }
+    ]
+  },
+  {
+    q: "好きな配信ジャンルは？",
+    opts: [
+      { text: "本格的な歌枠・Vsingerとしての歌唱", scores: { "伊織ねめあ": 4, "帝": 3 } },
+      { text: "巧みなゲーム実況や耐久プレイ", scores: { "馬鹿蝶": 4, "氷室うつろ": 2 } },
+      { text: "予想がつかないぶっ飛んだバラエティ企画", scores: { "満咲ミリネ": 5 } },
+      { text: "とろけるような圧倒的クオリティの深夜ASMR", scores: { "切熊ゆに": 5 } }
+    ]
+  },
+  {
+    q: "SNS（Xなど）でのポスト頻度や浮上率は？",
+    opts: [
+      { text: "日常のつぶやきやお絵描きなど、SNSでも距離近く活発な人がいい", scores: { "幽麗シャノ": 6, "魔昏るい": 2 } },
+      { text: "SNSにはほぼ現れず、謎に包まれている完全ミステリアス派", scores: { "帝": 6 } },
+      { text: "告知程度でマイペースに動くくらいがちょうどいい", scores: { "神乃ひかり": 3, "伊織ねめあ": 4, "馬鹿蝶": 2 } }
+    ]
+  },
+  {
+    q: "ライバーのキャラクター・立ち位置で惹かれるのは？",
+    opts: [
+      { text: "常識人枠でサバサバ突っ込んでくれる頼れるお兄さん", scores: { "勝気シャクナ": 5 } },
+      { text: "明るくみんなを照らす元気なムードメーカー", scores: { "満咲ミリネ": 5 } },
+      { text: "独特な空気感があって、見ていると引き込まれる不思議な人", scores: { "馬鹿蝶": 5 } },
+      { text: "ミニマリストでアーティスティック、独自の世界を持つ人", scores: { "碧衣ヘル": 5 } }
+    ]
+  },
+  {
+    q: "オタクカルチャーの趣味で惹かれるものは？",
+    opts: [
+      { text: "ディズニーやアニメなど、王道の熱いオタクトーク", scores: { "伊織ねめあ": 5 } },
+      { text: "平成初期〜中期の懐かしいネットカルチャーやレトロネタ", scores: { "魔昏るい": 4 } },
+      { text: "ボーカロイドやネットミーム、流行りのサブカルネタ", scores: { "氷室うつろ": 4, "魔昏るい": 3 } },
+      { text: "独自のアートやスタイリッシュなクリエイティブ", scores: { "碧衣ヘル": 4 } }
+    ]
+  },
+  {
+    q: "特技・パーソナルな魅力でグッとくるのは？",
+    opts: [
+      { text: "料理が得意で家庭的な一面がある", scores: { "勝気シャクナ": 5 } },
+      { text: "楽器演奏やマルチな音楽センスがある", scores: { "魔昏るい": 4 } },
+      { text: "卓越したゲームの腕前と軽快なトーク力", scores: { "氷室うつろ": 4, "馬鹿蝶": 3 } }
+    ]
+  },
+  {
+    q: "お絵描きやクリエイティブ作業を見守るのは好き？",
+    opts: [
+      { text: "超絶うまいイラストの制作過程をまったり見守りたい！", scores: { "幽麗シャノ": 5 } },
+      { text: "ぶっ飛んだ発想の企画や作品を楽しみたい", scores: { "満咲ミリネ": 5 } },
+      { text: "トークやゲーム中心で楽しみたい", scores: { "神乃ひかり": 4, "勝気シャクナ": 3 } }
+    ]
+  },
+  {
+    q: "女性ライバーに求める「かわいさ」の方向性は？",
+    opts: [
+      { text: "全力で甘やかしたくなるあざと可愛い妹系カワボ", scores: { "切熊ゆに": 4 } },
+      { text: "ほんわかおっとり、安心感のある癒やしボイス", scores: { "餅々さくら": 5 } },
+      { text: "幽霊のようなふわふわした浮遊感カワボ", scores: { "幽麗シャノ": 4 } },
+      { text: "ハスキーで甘やかしてくれる、頼もしいお姉さん", scores: { "百目鬼える": 4 } }
+    ]
+  },
+  {
+    q: "ゲーム配信で一番見たいスタイルは？",
+    opts: [
+      { text: "落ち着いたトーンで見せる玄人好みのプレイ", scores: { "馬鹿蝶": 4 } },
+      { text: "リスナーと雑談しながらの安定したプレイ", scores: { "氷室うつろ": 4 } },
+      { text: "アニメ・ゲーム愛全開で長時間とことん遊ぶプレイ", scores: { "魔昏るい": 4 } },
+      { text: "リアクション全開のドタバタプレイ", scores: { "神乃ひかり": 5, "満咲ミリネ": 4 } }
+    ]
+  },
+  {
+    q: "「神様」「幽霊」など、ファンタジーな世界観は好き？",
+    opts: [
+      { text: "神様！ありがたいけどポンコツな神様！", scores: { "神乃ひかり": 5 } },
+      { text: "幽霊猫！少し不思議でキュートなお絵描き幽霊！", scores: { "幽麗シャノ": 5 } },
+      { text: "唯一無二のクールでアートな世界観に浸りたい", scores: { "碧衣ヘル": 4 } },
+      { text: "等身大で人間味のある自然体な人が好き", scores: { "百目鬼える": 4, "餅々さくら": 3 } }
+    ]
+  },
+  {
+    q: "おっとり癒やし系だけど、たまにチクリと毒舌…というギャップは？",
+    opts: [
+      { text: "大好物です。そのギャップに癒やされたい", scores: { "餅々さくら": 5 } },
+      { text: "優しく甘々で包み込んでほしい", scores: { "氷室うつろ": 2, "切熊ゆに": 2 } },
+      { text: "気持ちのいいストレートなツッコミが好き", scores: { "勝気シャクナ": 5 } }
+    ]
+  },
+  {
+    q: "最後の質問です。星めぐり学園で今夜出会いたいのは？",
+    opts: [
+      { text: "魂に響く圧倒的な歌声と美しい響き", scores: { "伊織ねめあ": 4, "百目鬼える": 2 } },
+      { text: "クールで唯一無二、他にはないアーティスティックな空間", scores: { "碧衣ヘル": 5 } },
+      { text: "気さくに乾杯できる最高のお姉さん・相棒", scores: { "百目鬼える": 5 } },
+      { text: "独特のペースで癒やしてくれる不思議な低音", scores: { "馬鹿蝶": 4 } }
+    ]
+  }
+];
+
+let currentQ = 0;
+let userScores = {};
+let scoreHistory = [];
+
+function initScores() {
+  userScores = {};
+  scoreHistory = [];
+  for (let liver in LIVERS) {
+    userScores[liver] = 0;
+  }
+}
+
+function renderQuestion() {
+  const qData = questions[currentQ];
+  document.getElementById("q-number").innerText = `QUESTION ${String(currentQ + 1).padStart(2, '0')} / ${questions.length}`;
+  document.getElementById("q-text").innerText = qData.q;
+  
+  const progressPercent = ((currentQ) / questions.length) * 100;
+  document.getElementById("progress").style.width = `${progressPercent}%`;
+
+  const backBtn = document.getElementById("back-btn");
+  if (currentQ > 0) {
+    backBtn.style.display = "inline-flex";
+  } else {
+    backBtn.style.display = "none";
+  }
+
+  const optContainer = document.getElementById("options-container");
+  optContainer.innerHTML = "";
+
+  qData.opts.forEach((opt) => {
+    const btn = document.createElement("button");
+    btn.className = "option-btn";
+    btn.innerText = opt.text;
+    btn.onclick = () => selectOption(opt.scores);
+    optContainer.appendChild(btn);
+  });
+}
+
+function selectOption(scores) {
+  scoreHistory.push(scores);
+
+  for (let liver in scores) {
+    if (userScores.hasOwnProperty(liver)) {
+      userScores[liver] += scores[liver];
+    }
+  }
+
+  currentQ++;
+  if (currentQ < questions.length) {
+    renderQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function prevQuestion() {
+  if (currentQ > 0) {
+    const lastScores = scoreHistory.pop();
+    if (lastScores) {
+      for (let liver in lastScores) {
+        if (userScores.hasOwnProperty(liver)) {
+          userScores[liver] -= lastScores[liver];
+        }
+      }
+    }
+    currentQ--;
+    renderQuestion();
+  }
+}
+
+async function fetchLiverCount(liverKey) {
+  try {
+    const res = await fetch(`https://api.counterapi.dev/v1/hoshimeguri_shindan_app/${liverKey}/up`);
+    if (res.ok) {
+      const data = await res.json();
+      return data.count;
+    }
+  } catch (e) {
+    console.warn("Counter API offline, using local fallback");
+  }
+  let localCount = parseInt(localStorage.getItem(`count_${liverKey}`) || "0", 10) + 1;
+  localStorage.setItem(`count_${liverKey}`, localCount);
+  return localCount;
+}
+
+async function showResult() {
+  document.getElementById("progress").style.width = `100%`;
+  document.getElementById("quiz-box").style.display = "none";
+  
+  let bestLiver = "";
+  let maxScore = -1;
+  for (let liver in userScores) {
+    if (userScores[liver] > maxScore) {
+      maxScore = userScores[liver];
+      bestLiver = liver;
+    }
+  }
+
+  const liverInfo = LIVERS[bestLiver];
+  document.getElementById("liver-name").innerText = bestLiver;
+  document.getElementById("counter-liver-name").innerText = bestLiver;
+  document.getElementById("liver-desc").innerText = liverInfo.desc;
+
+  const officialBtn = document.getElementById("official-btn");
+  officialBtn.href = liverInfo.url || "https://hoshimeguri.live/";
+
+  const imgElement = document.getElementById("liver-img");
+  const imgContainer = document.getElementById("image-container");
+  if (liverInfo.img && liverInfo.img.trim() !== "") {
+    imgElement.src = liverInfo.img;
+    imgContainer.style.display = "flex";
+  } else {
+    imgContainer.style.display = "none";
+  }
+
+  const baseUrl = window.location.href.split('?')[0].replace(/index\.html$/, '').replace(/\/$/, '');
+  const shareTargetUrl = `${baseUrl}/${liverInfo.file}`;
+
+  const shareText = encodeURIComponent(
+    `【星めぐり学園 推し診断】\n私にぴったりなライバーは…✨「${bestLiver}」✨でした！\n\n#星めぐり学園推し診断\n`
+  );
+  const shareUrl = encodeURIComponent(shareTargetUrl);
+  const postBtn = document.getElementById("result-post-link");
+  postBtn.href = `https://x.com/intent/post?text=${shareText}&url=${shareUrl}`;
+  postBtn.style.display = "flex";
+
+  document.getElementById("result-box").style.display = "block";
+
+  const count = await fetchLiverCount(liverInfo.key);
+  document.getElementById("liver-count").innerText = count.toLocaleString();
+}
+
+function restartQuiz() {
+  currentQ = 0;
+  initScores();
+  document.getElementById("result-box").style.display = "none";
+  document.getElementById("quiz-box").style.display = "block";
+  renderQuestion();
+}
+
+initScores();
+renderQuestion();
+</script>
+
 </body>
 </html>
