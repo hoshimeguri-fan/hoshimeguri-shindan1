@@ -171,8 +171,27 @@
     .result-name {
       font-size: 2.1rem;
       font-weight: bold;
-      margin-bottom: 16px;
+      margin-bottom: 8px;
       color: #fff;
+    }
+
+    /* カウンター表示バッジ */
+    .counter-badge {
+      display: inline-block;
+      background: rgba(121, 134, 203, 0.2);
+      border: 1px solid var(--accent);
+      color: #e0e0e0;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+      font-weight: 500;
+    }
+
+    .counter-num {
+      color: var(--star-color);
+      font-weight: bold;
+      font-size: 1.05rem;
     }
 
     .image-wrapper {
@@ -324,6 +343,11 @@
     <div class="result-badge">あなたにぴったりのライバーは…</div>
     <div class="result-name" id="liver-name">ライバー名</div>
 
+    <!-- カウンター表示エリア -->
+    <div class="counter-badge" id="counter-display">
+      ✨ あなたは <span class="counter-num" id="liver-count">...</span> 人目の <span id="counter-liver-name"></span> の推しです！
+    </div>
+
     <div class="image-wrapper" id="image-container">
       <img src="" alt="ライバー画像" id="liver-img" class="liver-img">
     </div>
@@ -348,78 +372,91 @@
 <script>
 const LIVERS = {
   "神乃ひかり": {
+    key: "kamino_hikari",
     desc: "✨ 神様系ハイテンション！\n明るく甘い元気な声と、リスナーとの楽しいプロレス・愛されポンコツな一面が魅力。夜〜深夜に笑顔と元気をもらいたいあなたにぴったりです。",
     url: "https://hoshimeguri.live/vtuber/kamino-hikari/",
     img: "https://hoshimeguri.live/wp-content/uploads/2025/12/hikari02_1.webp",
     score: 0
   },
   "餅々さくら": {
+    key: "mochimochi_sakura",
     desc: "🌸 癒やし系カワボ × 歌唱力！\nほんわかおっとりした安心感と、時折見せるピリッとした毒舌のギャップが癖になる。圧倒的な歌唱力は必聴です。",
     url: "https://hoshimeguri.live/vtuber/mochimochi-sakura/",
     img: "https://hoshimeguri.live/wp-content/uploads/2025/12/mochimochi_4-1.webp",
     score: 0
   },
   "伊織ねめあ": {
+    key: "iori_nemea",
     desc: "🦄 芯のある美声 × オタク気質！\n圧倒的な表現力と美しい声での歌・ゲーム配信。ディズニー好きなど親しみやすいオタク気質もあり、じっくり配信を楽しみたいあなたに。",
     url: "https://hoshimeguri.live/vtuber/iori-nemea/",
     img: "https://hoshimeguri.live/wp-content/uploads/2025/12/iori_4.webp",
     score: 0
   },
   "氷室うつろ": {
+    key: "himuro_utsuro",
     desc: "❄️ 凄腕ゲーマーメイド × 距離感ゼロ！\n毎日夜に会える安心感。軽快なトーク力と心地よいコメ読み、高いゲームの腕前で毎日の疲れをじんわり溶かしてくれます。",
     url: "https://hoshimeguri.live/vtuber/himuro-utsuro/",
     img: "https://hoshimeguri.live/wp-content/uploads/2025/12/utsuro_3.webp",
     score: 0
   },
   "百目鬼える": {
+    key: "domeki_eru",
     desc: "👁️‍🗨️ ハスキーイケボ × 友達感覚！\n少年感のある歌うまハスキーボイス。一緒に乾杯しながらワイワイ過ごせる距離感の近さと、抜群の歌唱力・ゲームへの熱量が魅力です。",
     url: "https://hoshimeguri.live/vtuber/domeki-eru/",
     img: "https://hoshimeguri.live/wp-content/uploads/2025/12/eru_3.webp",
     score: 0
   },
   "満咲ミリネ": {
+    key: "michisaki_mirine",
     desc: "🌟 明るいムードメーカー × ぶっ飛び企画！\nクリアな明るい声と親しみやすさ抜群のトーク。思わず笑顔になっちゃう予想外の企画力で、楽しい夜を過ごしたいあなたに。",
     url: "https://hoshimeguri.live/vtuber/michisaki-mirine/",
     img: "https://hoshimeguri.live/wp-content/uploads/2025/12/mirine_1.webp",
     score: 0
   },
   "勝気シャクナ": {
+    key: "kachiki_shakuna",
     desc: "🥀 落ち着きツッコミ × 頼れるお兄さん！\nサバサバした軽快なトークと常識人枠の安心感。料理も歌もこなす頼れる存在で、心地よいASMRやゲーム実況を届けてくれます。",
     url: "https://hoshimeguri.live/vtuber/kachiki-shakuna/",
     img: "https://hoshimeguri.live/wp-content/uploads/2025/12/shakuna_4.webp",
     score: 0
   },
   "馬鹿蝶": {
+    key: "umashika_tefu",
     desc: "🦋 低音落ち着き × 独特な世界観！\n思わず守りたくなる不思議な雰囲気と、確かなゲームの腕前。夜にまったりと独特のペースに浸りたいあなたに最適です。",
     url: "https://hoshimeguri.live/vtuber/umashika-tefu/",
     img: "https://hoshimeguri.live/wp-content/uploads/2025/12/tefu_1.webp",
     score: 0
   },
   "切熊ゆに": {
+    key: "kirikuma_yuni",
     desc: "🧸 甘々妹系カワボ × 深夜ASMR！\n毎日深夜に癒やしてくれるあざと可愛い妹枠。甘えられたい人、深夜に甘い歌声やASMRでとろけたい人にぴったりです。",
     url: "https://hoshimeguri.live/vtuber/kirikuma-yuni/",
     img: "https://hoshimeguri.live/wp-content/uploads/2025/12/yuni_2.webp",
     score: 0
   },
   "碧衣ヘル": {
+    key: "aoi_heru",
     desc: "🌌 クール透明感 × アーティスティック！\n唯一無二の世界観を持つマイペースな表現者。落ち着いたトーンとお酒・企画配信で、特別な夜を過ごしたいあなたへ。",
     url: "https://hoshimeguri.live/vtuber/aoi-heru/",
     img: "https://hoshimeguri.live/wp-content/uploads/2025/12/heru_6.webp",
     score: 0
   },
   "帝": {
+    key: "mikado_vsinger",
     desc: "👑 圧倒的Vsinger × 孤高の歌姫！（ツチノコ）\n配信やSNSにも現れないど、ただひたすらに魂を揺さぶる至高の歌唱力を浴びたいあなたに最もふさわしい存在です。",
     url: "https://hoshimeguri.live/vtuber/mikado/",
     img: "https://hoshimeguri.live/wp-content/uploads/2025/12/mikado_1.webp",
     score: 0
   },
   "幽麗シャノ": {
+    key: "yurei_shano",
     desc: "👻 浮遊感カワボ × 期待の幽霊枠！\n夜に活発に現れる、お絵描き幽霊猫。高いイラスト技術に加えてゲーム・歌をマルチにこなす不思議で可愛らしい存在。SNSでも距離近く楽しみたいあなたに。",
     url: "https://hoshimeguri.live/vtuber/yurei-shano/",
     img: "https://hoshimeguri.live/wp-content/uploads/2026/07/shano.webp",
     score: 0
   },
   "魔昏るい": {
+    key: "makura_rui",
     desc: "🎮 男声・女声の二刀流 × 平成レトロ＆長時間！\n変幻自在の声質と楽器演奏・抜群の歌うま力。2〜10時間の長時間配信で、友達感覚で朝までガッツリ付き合いたいあなたへ。",
     url: "https://hoshimeguri.live/vtuber/makura-rui/",
     img: "https://hoshimeguri.live/wp-content/uploads/2025/12/rui_1.webp",
@@ -673,7 +710,22 @@ function prevQuestion() {
   }
 }
 
-function showResult() {
+async function fetchLiverCount(liverKey) {
+  try {
+    const res = await fetch(`https://api.counterapi.dev/v1/hoshimeguri_shindan_app/${liverKey}/up`);
+    if (res.ok) {
+      const data = await res.json();
+      return data.count;
+    }
+  } catch (e) {
+    console.warn("Counter API offline, using local fallback");
+  }
+  let localCount = parseInt(localStorage.getItem(`count_${liverKey}`) || "0", 10) + 1;
+  localStorage.setItem(`count_${liverKey}`, localCount);
+  return localCount;
+}
+
+async function showResult() {
   document.getElementById("progress").style.width = `100%`;
   document.getElementById("quiz-box").style.display = "none";
   
@@ -688,6 +740,7 @@ function showResult() {
 
   const liverInfo = LIVERS[bestLiver];
   document.getElementById("liver-name").innerText = bestLiver;
+  document.getElementById("counter-liver-name").innerText = bestLiver;
   document.getElementById("liver-desc").innerText = liverInfo.desc;
 
   const officialBtn = document.getElementById("official-btn");
@@ -702,7 +755,7 @@ function showResult() {
     imgContainer.style.display = "none";
   }
 
-  // #星めぐり学園 のみを外し、#星めぐり学園推し診断 を残した設定
+  // ポスト文の設定（カウンター文言を含まないシンプルな形式）
   const shareText = encodeURIComponent(
     `【星めぐり学園 推し診断】\n私にぴったりなライバーは…✨「${bestLiver}」✨でした！\n\n#星めぐり学園推し診断\n`
   );
@@ -712,6 +765,10 @@ function showResult() {
   postBtn.style.display = "flex";
 
   document.getElementById("result-box").style.display = "block";
+
+  // 結果画面のカウンター数字のみを非同期で更新
+  const count = await fetchLiverCount(liverInfo.key);
+  document.getElementById("liver-count").innerText = count.toLocaleString();
 }
 
 function restartQuiz() {
