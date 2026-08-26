@@ -702,8 +702,9 @@ function showResult() {
     imgContainer.style.display = "none";
   }
 
+  // #星めぐり学園 のみを外し、#星めぐり学園推し診断 を残した設定
   const shareText = encodeURIComponent(
-    `【星めぐり学園 推し診断】\n私にぴったりなライバーは…✨「${bestLiver}」✨でした！\n\n#星めぐり学園推し診断 #星めぐり学園\n`
+    `【星めぐり学園 推し診断】\n私にぴったりなライバーは…✨「${bestLiver}」✨でした！\n\n#星めぐり学園推し診断\n`
   );
   const shareUrl = encodeURIComponent(window.location.href);
   const postBtn = document.getElementById("result-post-link");
