@@ -43,7 +43,6 @@
       text-align: center;
     }
 
-    /* ロゴ画像のスタイル */
     .logo-container {
       margin-bottom: 16px;
     }
@@ -121,6 +120,33 @@
       transform: translateY(-2px);
     }
 
+    /* 前に戻るボタン */
+    .back-btn-wrapper {
+      margin-top: 18px;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .back-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-sub);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      transition: 0.2s;
+    }
+
+    .back-btn:hover {
+      color: var(--text-main);
+      border-color: var(--accent);
+      background: rgba(121, 134, 203, 0.1);
+    }
+
     /* Result Section */
     .result-container {
       display: none;
@@ -192,30 +218,34 @@
       gap: 12px;
     }
 
-    .share-btn {
-      background: #ffffff;
-      color: #000000;
-      border: none;
-      padding: 15px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
-      transition: 0.2s ease;
+    /* 広告ブロッカー対策：クラス名とスタイルを強化 */
+    .post-action-button {
+      background: #ffffff !important;
+      color: #000000 !important;
+      border: none !important;
+      padding: 15px !important;
+      border-radius: 10px !important;
+      text-decoration: none !important;
+      font-weight: bold !important;
+      font-size: 1rem !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 10px !important;
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15) !important;
+      transition: 0.2s ease !important;
+      cursor: pointer !important;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
 
-    .share-btn:hover {
-      background: #e6e6e6;
+    .post-action-button:hover {
+      background: #e6e6e6 !important;
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(255, 255, 255, 0.25);
+      box-shadow: 0 6px 16px rgba(255, 255, 255, 0.25) !important;
     }
 
-    .official-btn {
+    .official-profile-link {
       background: rgba(79, 195, 247, 0.12);
       color: var(--official-color);
       border: 1px solid var(--official-color);
@@ -230,7 +260,7 @@
       transition: 0.2s;
     }
 
-    .official-btn:hover {
+    .official-profile-link:hover {
       background: var(--official-color);
       color: #0f1123;
     }
@@ -269,7 +299,6 @@
 
 <div class="container">
   <div id="quiz-box">
-    <!-- 上部ロゴ表示エリア -->
     <div class="logo-container">
       <img src="https://hoshimeguri.live/wp-content/uploads/2026/02/hoshimeguri.webp" alt="星めぐり学園" class="site-logo">
     </div>
@@ -285,6 +314,13 @@
     <div class="question-text" id="q-text">質問テキスト</div>
 
     <div class="options" id="options-container"></div>
+
+    <!-- 1つ前の設問に戻るボタン -->
+    <div class="back-btn-wrapper">
+      <button class="back-btn" id="back-btn" onclick="prevQuestion()">
+        <span>← 前の質問に戻る</span>
+      </button>
+    </div>
   </div>
 
   <div id="result-box" class="result-container">
@@ -298,10 +334,14 @@
     <div class="result-desc" id="liver-desc">紹介文</div>
 
     <div class="action-btn-group">
-      <a href="#" id="share-btn" target="_blank" rel="noopener noreferrer" class="share-btn">
-        <span>𝕏 で結果をポストする</span>
+      <!-- 広告ブロッカー対策を施したXポストボタン -->
+      <a href="#" id="result-post-link" target="_blank" rel="noopener noreferrer" class="post-action-button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        <span>結果をポストする</span>
       </a>
-      <a href="#" id="official-btn" target="_blank" rel="noopener noreferrer" class="official-btn">
+      <a href="#" id="official-btn" target="_blank" rel="noopener noreferrer" class="official-profile-link">
         <span>🌐 公式プロフィールを見る</span>
       </a>
       <button class="retry-btn" onclick="restartQuiz()">もう一度診断する</button>
@@ -567,9 +607,11 @@ const questions = [
 
 let currentQ = 0;
 let userScores = {};
+let scoreHistory = []; // 戻るボタン用の履歴管理スタック
 
 function initScores() {
   userScores = {};
+  scoreHistory = [];
   for (let liver in LIVERS) {
     userScores[liver] = 0;
   }
@@ -582,6 +624,14 @@ function renderQuestion() {
   
   const progressPercent = ((currentQ) / questions.length) * 100;
   document.getElementById("progress").style.width = `${progressPercent}%`;
+
+  // 1問目以外なら「前の質問に戻る」を表示
+  const backBtn = document.getElementById("back-btn");
+  if (currentQ > 0) {
+    backBtn.style.display = "inline-flex";
+  } else {
+    backBtn.style.display = "none";
+  }
 
   const optContainer = document.getElementById("options-container");
   optContainer.innerHTML = "";
@@ -596,6 +646,9 @@ function renderQuestion() {
 }
 
 function selectOption(scores) {
+  // 選択したスコアを履歴に保存してロールバック可能にする
+  scoreHistory.push(scores);
+
   for (let liver in scores) {
     if (userScores.hasOwnProperty(liver)) {
       userScores[liver] += scores[liver];
@@ -607,6 +660,22 @@ function selectOption(scores) {
     renderQuestion();
   } else {
     showResult();
+  }
+}
+
+// 1つ前の設問に戻る処理
+function prevQuestion() {
+  if (currentQ > 0) {
+    const lastScores = scoreHistory.pop();
+    if (lastScores) {
+      for (let liver in lastScores) {
+        if (userScores.hasOwnProperty(liver)) {
+          userScores[liver] -= lastScores[liver];
+        }
+      }
+    }
+    currentQ--;
+    renderQuestion();
   }
 }
 
@@ -639,11 +708,14 @@ function showResult() {
     imgContainer.style.display = "none";
   }
 
+  // ポストリンクの生成（x.com/intent/post を採用）
   const shareText = encodeURIComponent(
     `【星めぐり学園 推し診断】\n私にぴったりなライバーは…✨「${bestLiver}」✨でした！\n\n#星めぐり学園推し診断 #星めぐり学園\n`
   );
   const shareUrl = encodeURIComponent(window.location.href);
-  document.getElementById("share-btn").href = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`;
+  const postBtn = document.getElementById("result-post-link");
+  postBtn.href = `https://x.com/intent/post?text=${shareText}&url=${shareUrl}`;
+  postBtn.style.display = "flex";
 
   document.getElementById("result-box").style.display = "block";
 }
