@@ -120,7 +120,6 @@
       transform: translateY(-2px);
     }
 
-    /* 前に戻るボタン */
     .back-btn-wrapper {
       margin-top: 18px;
       display: flex;
@@ -218,7 +217,6 @@
       gap: 12px;
     }
 
-    /* 広告ブロッカー対策：クラス名とスタイルを強化 */
     .post-action-button {
       background: #ffffff !important;
       color: #000000 !important;
@@ -315,7 +313,6 @@
 
     <div class="options" id="options-container"></div>
 
-    <!-- 1つ前の設問に戻るボタン -->
     <div class="back-btn-wrapper">
       <button class="back-btn" id="back-btn" onclick="prevQuestion()">
         <span>← 前の質問に戻る</span>
@@ -334,7 +331,6 @@
     <div class="result-desc" id="liver-desc">紹介文</div>
 
     <div class="action-btn-group">
-      <!-- 広告ブロッカー対策を施したXポストボタン -->
       <a href="#" id="result-post-link" target="_blank" rel="noopener noreferrer" class="post-action-button">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -370,7 +366,7 @@ const LIVERS = {
     score: 0
   },
   "氷室うつろ": {
-    desc: "❄️ 透明感ウィスパー × 距離感ゼロ！\n毎日夜に会える安心感。軽快なトーク力と心地よいコメ読み、高いゲームの腕前で毎日の疲れをじんわり溶かしてくれます。",
+    desc: "❄️ 凄腕ゲーマーメイド × 距離感ゼロ！\n毎日夜に会える安心感。軽快なトーク力と心地よいコメ読み、高いゲームの腕前で毎日の疲れをじんわり溶かしてくれます。",
     url: "https://hoshimeguri.live/vtuber/himuro-utsuro/",
     img: "https://hoshimeguri.live/wp-content/uploads/2025/12/utsuro_3.webp",
     score: 0
@@ -445,7 +441,7 @@ const questions = [
     q: "配信者に一番求めている要素は？",
     opts: [
       { text: "ひたすら心に響く圧倒的な歌声・表現力", scores: { "伊織ねめあ": 3, "帝": 4 } },
-      { text: "毎日の日課として寄り添ってくれるコメ読み・距離の近さ", scores: { "氷室うつろ": 5 } },
+      { text: "毎日の日課として寄り添ってくれるコメ読み・距離の近さ", scores: { "氷室うつろ": 4 } },
       { text: "友達感覚で笑い合える軽快なノリ・企画", scores: { "満咲ミリネ": 5 } },
       { text: "独特の世界観と落ち着いた癒やし", scores: { "馬鹿蝶": 4, "碧衣ヘル": 3 } }
     ]
@@ -470,7 +466,7 @@ const questions = [
     q: "配信の長さ（枠の長さ）の理想は？",
     opts: [
       { text: "2時間前後でちょうどよくまとまっている", scores: { "勝気シャクナ": 5, "餅々さくら": 3 } },
-      { text: "3〜4時間くらい、夜じっくり付き合いたい", scores: { "氷室うつろ": 4, "馬鹿蝶": 3 } },
+      { text: "3〜4時間くらい、夜じっくり付き合いたい", scores: { "氷室うつろ": 3, "馬鹿蝶": 3 } },
       { text: "4時間以上の耐久や長時間配信もウェルカム！", scores: { "魔昏るい": 5 } }
     ]
   },
@@ -539,7 +535,8 @@ const questions = [
     q: "オタクカルチャーの趣味で惹かれるものは？",
     opts: [
       { text: "ディズニーやアニメなど、王道の熱いオタクトーク", scores: { "伊織ねめあ": 5 } },
-      { text: "平成初期〜中期の懐かしいネットカルチャーやレトロネタ", scores: { "魔昏るい": 5 } },
+      { text: "平成初期〜中期の懐かしいネットカルチャーやレトロネタ", scores: { "魔昏るい": 4 } },
+      { text: "ボーカロイドやネットミーム、流行りのサブカルネタ", scores: { "氷室うつろ": 4, "魔昏るい": 3 } },
       { text: "独自のアートやスタイリッシュなクリエイティブ", scores: { "碧衣ヘル": 4 } }
     ]
   },
@@ -590,7 +587,7 @@ const questions = [
     q: "おっとり癒やし系だけど、たまにチクリと毒舌…というギャップは？",
     opts: [
       { text: "大好物です。そのギャップに癒やされたい", scores: { "餅々さくら": 5 } },
-      { text: "優しく甘々で包み込んでほしい", scores: { "氷室うつろ": 3, "切熊ゆに": 2 } },
+      { text: "優しく甘々で包み込んでほしい", scores: { "氷室うつろ": 2, "切熊ゆに": 2 } },
       { text: "気持ちのいいストレートなツッコミが好き", scores: { "勝気シャクナ": 5 } }
     ]
   },
@@ -607,7 +604,7 @@ const questions = [
 
 let currentQ = 0;
 let userScores = {};
-let scoreHistory = []; // 戻るボタン用の履歴管理スタック
+let scoreHistory = [];
 
 function initScores() {
   userScores = {};
@@ -625,7 +622,6 @@ function renderQuestion() {
   const progressPercent = ((currentQ) / questions.length) * 100;
   document.getElementById("progress").style.width = `${progressPercent}%`;
 
-  // 1問目以外なら「前の質問に戻る」を表示
   const backBtn = document.getElementById("back-btn");
   if (currentQ > 0) {
     backBtn.style.display = "inline-flex";
@@ -646,7 +642,6 @@ function renderQuestion() {
 }
 
 function selectOption(scores) {
-  // 選択したスコアを履歴に保存してロールバック可能にする
   scoreHistory.push(scores);
 
   for (let liver in scores) {
@@ -663,7 +658,6 @@ function selectOption(scores) {
   }
 }
 
-// 1つ前の設問に戻る処理
 function prevQuestion() {
   if (currentQ > 0) {
     const lastScores = scoreHistory.pop();
@@ -708,7 +702,6 @@ function showResult() {
     imgContainer.style.display = "none";
   }
 
-  // ポストリンクの生成（x.com/intent/post を採用）
   const shareText = encodeURIComponent(
     `【星めぐり学園 推し診断】\n私にぴったりなライバーは…✨「${bestLiver}」✨でした！\n\n#星めぐり学園推し診断 #星めぐり学園\n`
   );
