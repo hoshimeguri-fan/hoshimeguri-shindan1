@@ -297,6 +297,27 @@
       border-color: var(--text-main);
     }
 
+    /* フッタークレジットスタイル */
+    .creator-contact {
+      margin-top: 24px;
+      padding-top: 14px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.12);
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      line-height: 1.5;
+    }
+
+    .creator-contact a {
+      color: #9fa8da;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .creator-contact a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
     @media (max-width: 480px) {
       .container {
         padding: 20px 16px;
@@ -363,6 +384,11 @@
         <span>🌐 公式プロフィールを見る</span>
       </a>
       <button class="retry-btn" onclick="restartQuiz()">もう一度診断する</button>
+    </div>
+
+    <!-- お問い合わせ・作者リンク -->
+    <div class="creator-contact">
+      ご意見・お問い合わせ・不具合等は <a href="https://x.com/yatatatatan" target="_blank" rel="noopener noreferrer">𝕏 (@yatatatatan)</a> まで
     </div>
   </div>
 </div>
@@ -766,7 +792,6 @@ async function showResult() {
     imgContainer.style.display = "none";
   }
 
-  // ライバーごとのOGP専用ページURLを生成
   const baseUrl = window.location.href.split('?')[0].replace(/index\.html$/, '').replace(/\/$/, '');
   const shareTargetUrl = `${baseUrl}/${liverInfo.file}`;
 
