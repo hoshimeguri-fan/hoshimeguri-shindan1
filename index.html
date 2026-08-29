@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>星めぐり学園 推しライバー診断</title>
+  <title>星めぐり学園 推しライバー診断（非公式）</title>
   <style>
     :root {
       --bg-dark: #0f1123;
@@ -62,7 +62,19 @@
     p.subtitle {
       font-size: 0.9rem;
       color: var(--text-sub);
-      margin-bottom: 24px;
+      margin-bottom: 12px;
+    }
+
+    /* 非公式表記バッジ */
+    .disclaimer-top {
+      font-size: 0.75rem;
+      color: #90a4ae;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 6px 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      line-height: 1.4;
+      display: inline-block;
     }
 
     .progress-bar-container {
@@ -297,13 +309,19 @@
       border-color: var(--text-main);
     }
 
+    /* フッタークレジット＆免責表記 */
     .creator-contact {
       margin-top: 24px;
       padding-top: 14px;
       border-top: 1px dashed rgba(255, 255, 255, 0.12);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-sub);
-      line-height: 1.5;
+      line-height: 1.6;
+    }
+
+    .creator-contact .disclaimer-text {
+      color: #78909c;
+      margin-bottom: 6px;
     }
 
     .creator-contact a {
@@ -342,6 +360,10 @@
     <h1>星めぐり学園 推し診断</h1>
     <p class="subtitle">全20問の質問に答えて、あなたにぴったりのライバーを見つけよう</p>
     
+    <div class="disclaimer-top">
+      ※当サイトはファンによる非公式の企画であり、公式・所属ライバー様とは関係ありません。
+    </div>
+
     <div class="progress-bar-container">
       <div class="progress-bar" id="progress"></div>
     </div>
@@ -385,7 +407,9 @@
       <button class="retry-btn" onclick="restartQuiz()">もう一度診断する</button>
     </div>
 
+    <!-- フッター免責・お問い合わせ -->
     <div class="creator-contact">
+      <div class="disclaimer-text">※当サイトは非公式のファンメイド企画であり、星めぐり学園公式とは一切関係ありません。</div>
       ご意見・お問い合わせ・不具合等は <a href="https://x.com/yatatatatan" target="_blank" rel="noopener noreferrer">𝕏 (@yatatatatan)</a> まで
     </div>
   </div>
