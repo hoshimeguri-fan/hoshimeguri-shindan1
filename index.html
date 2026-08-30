@@ -65,7 +65,6 @@
       margin-bottom: 12px;
     }
 
-    /* 非公式表記バッジ */
     .disclaimer-top {
       font-size: 0.75rem;
       color: #90a4ae;
@@ -309,7 +308,6 @@
       border-color: var(--text-main);
     }
 
-    /* フッタークレジット＆免責表記 */
     .creator-contact {
       margin-top: 24px;
       padding-top: 14px;
@@ -407,7 +405,6 @@
       <button class="retry-btn" onclick="restartQuiz()">もう一度診断する</button>
     </div>
 
-    <!-- フッター免責・お問い合わせ -->
     <div class="creator-contact">
       <div class="disclaimer-text">※当サイトは非公式のファンメイド企画であり、星めぐり学園公式とは一切関係ありません。</div>
       ご意見・お問い合わせ・不具合等は <a href="https://x.com/yatatatatan" target="_blank" rel="noopener noreferrer">𝕏 (@yatatatatan)</a> まで
@@ -773,19 +770,27 @@ function prevQuestion() {
   }
 }
 
+// 修正：全プレイヤー共通で確実にカウントアップする関数
 async function fetchLiverCount(liverKey) {
+  const namespace = "hoshimeguri_shindan_fan_app_2026";
+  const apiUrl = `https://api.counterapi.dev/v1/${namespace}/${liverKey}/up`;
+
   try {
-    const res = await fetch(`https://api.counterapi.dev/v1/hoshimeguri_shindan_app/${liverKey}/up`);
+    const res = await fetch(apiUrl, {
+      method: "GET",
+      mode: "cors"
+    });
     if (res.ok) {
       const data = await res.json();
-      return data.count;
+      if (data && typeof data.count === "number") {
+        return data.count;
+      }
     }
   } catch (e) {
-    console.warn("Counter API offline, using local fallback");
+    console.warn("API取得エラー:", e);
   }
-  let localCount = parseInt(localStorage.getItem(`count_${liverKey}`) || "0", 10) + 1;
-  localStorage.setItem(`count_${liverKey}`, localCount);
-  return localCount;
+
+  return 1;
 }
 
 async function showResult() {
@@ -831,6 +836,7 @@ async function showResult() {
 
   document.getElementById("result-box").style.display = "block";
 
+  // クラウド共通カウントを取得・反映
   const count = await fetchLiverCount(liverInfo.key);
   document.getElementById("liver-count").innerText = count.toLocaleString();
 }
